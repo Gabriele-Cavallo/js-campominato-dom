@@ -31,6 +31,8 @@
 
 // Dichiaro l'array che andrà a conteneri i numeri corrispondenti alle celle delle bombe
 let gridBombs = [];
+// Dichiaro l'array per stabilire la vittoria del giocatore
+let endGame = [];
 // Dichiaro il punteggio inizale pari a 0
 let score = 0;
 // - Genero l'elemento del dom al cui click si crea la tabella di gioco
@@ -75,21 +77,28 @@ function createSquare(number){
     return square;
 }
 
-// funzione per colorare i grid item al click 
+// funzione per colorare i grid item al click e stabilire la vittoria o la perdita
 // gridItem ---> item del DOM a cui applicare l'evento click
 function clickSquare(gridItem){
     gridItem.addEventListener('click', function(){
-        // Se la cella cliccata corrisponde a una di quelle nell'array delle bombe si colora di rosso
+        // Se la cella cliccata corrisponde a una di quelle nell'array delle bombe si colora di rosso e dichiara la sconfitta
         if (gridBombs.includes(parseInt(this.children[0].innerHTML))){
             this.classList.add('red');
-            alert(`Hai perso!!! Il tuo punteggio è ${score}!!`)
-        // Altrimenti si colora di azzuro
-        }else{
+            alert(`Hai perso!!! Il tuo punteggio è ${score}!!`);
+        // Altrimenti si colora di azzuro e aumenta il punteggio di 1 e dichiara la vittoria al raggiungimento del massimo punteggio ottenibile
+        }else if(!endGame.includes(parseInt(this.children[0].innerHTML)) && (endGame.length >= 83)){
             this.classList.add('azure');
             score++;
-            console.log('score' , score);
+            // Pusho il numero selezionato in un array per stabilire la vittoria
+            endGame.push(parseInt(this.children[0].innerHTML));
+            alert(`Congratulazioni, hai vinto!!!! Il tuo punteggio è ${score}!!`);
+        }else if(!endGame.includes(parseInt(this.children[0].innerHTML))){
+            this.classList.add('azure');
+            score++;
+            // Pusho il numero selezionato in un array per stabilire la vittoria
+            endGame.push(parseInt(this.children[0].innerHTML));
         }
-        console.log('this-square' , this.children[0].innerHTML);
+        // console.log('this-square' , this.children[0].innerHTML);
     });
 }
 
@@ -110,7 +119,6 @@ function playGrid(){
         }else if(active === false){
             // Popolo l'array con i 16 numeri random che coincidono con le caselle delle bombe
             gridBombsRandom();
-            console.log('grid-bombs' , gridBombs);
             // - Genero una griglia in base alla difficoltà impostata
             for (let i = 0; i < difficoltà; i++) {
                 let gridSquare = createSquare(i + 1);
