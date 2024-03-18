@@ -77,7 +77,14 @@ function createSquare(number){
 // gridItem ---> item del DOM a cui applicare l'evento click
 function clickSquare(gridItem){
     gridItem.addEventListener('click', function(){
-        this.classList.toggle('azure');
+        // Se la cella cliccata corrisponde a una di quelle nell'array delle bombe si colora di rosso
+        if (gridBombs.includes(parseInt(this.children[0].innerHTML))){
+            this.classList.add('red');
+        // Altrimenti si colora di azzuro
+        }else{
+            this.classList.add('azure');
+        }
+        console.log('this-square' , this.children[0].innerHTML);
     });
 }
 
@@ -98,6 +105,7 @@ function playGrid(){
         }else if(active === false){
             // Popolo l'array con i 16 numeri random che coincidono con le caselle delle bombe
             gridBombsRandom();
+            console.log('grid-bombs' , gridBombs);
             // - Genero una griglia in base alla difficoltà impostata
             for (let i = 0; i < difficoltà; i++) {
                 let gridSquare = createSquare(i + 1);

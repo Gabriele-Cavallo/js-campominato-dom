@@ -64,6 +64,7 @@ main{
     justify-content: center;
     align-items: center;
     font-size: 25px;
+    cursor: pointer;
 }
 .square-normal{
     height: calc(100% / 9);
@@ -73,6 +74,7 @@ main{
     justify-content: center;
     align-items: center;
     font-size: 25px;
+    cursor: pointer;
 }
 .square-hard{
     height: calc(100% / 7);
@@ -82,11 +84,17 @@ main{
     justify-content: center;
     align-items: center;
     font-size: 25px;
+    cursor: pointer;
 }
 .square.azure,
 .square-normal.azure,
 .square-hard.azure{
     background-color: rgb(42, 234, 234);
+}
+.square.red,
+.square-normal.red,
+.square-hard.red{
+    background-color: red;
 }
 
 /* #endregion General */
