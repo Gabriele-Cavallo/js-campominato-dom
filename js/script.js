@@ -31,6 +31,8 @@
 
 // Dichiaro l'array che andrà a conteneri i numeri corrispondenti alle celle delle bombe
 let gridBombs = [];
+// Dichiaro il punteggio inizale pari a 0
+let score = 0;
 // - Genero l'elemento del dom al cui click si crea la tabella di gioco
 let play = document.querySelector('#play');
 // - Creo l'evento click che fa apparire la tabella
@@ -80,9 +82,12 @@ function clickSquare(gridItem){
         // Se la cella cliccata corrisponde a una di quelle nell'array delle bombe si colora di rosso
         if (gridBombs.includes(parseInt(this.children[0].innerHTML))){
             this.classList.add('red');
+            alert(`Hai perso!!! Il tuo punteggio è ${score}!!`)
         // Altrimenti si colora di azzuro
         }else{
             this.classList.add('azure');
+            score++;
+            console.log('score' , score);
         }
         console.log('this-square' , this.children[0].innerHTML);
     });
