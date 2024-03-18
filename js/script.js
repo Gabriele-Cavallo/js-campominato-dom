@@ -121,6 +121,7 @@ function playGrid(){
             userGrid.innerHTML = '';
             play.innerHTML = 'Open';
             active = false; 
+            location.reload();
         }else if(active === false){
             // Popolo l'array con i 16 numeri random che coincidono con le caselle delle bombe
             gridBombsRandom();
@@ -139,7 +140,7 @@ function playGrid(){
             }
             userGrid.classList.remove('hide');
             userGrid.classList.add('active');  
-            play.innerHTML = 'Close';
+            play.innerHTML = 'Reset';
             active = true; 
         }
     });
