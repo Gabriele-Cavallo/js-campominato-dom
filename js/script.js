@@ -31,6 +31,7 @@
 
 // Dichiaro l'array che andrà a conteneri i numeri corrispondenti alle celle delle bombe
 let gridBombs = [];
+let bombExplode = [];
 // Dichiaro l'array per stabilire la vittoria del giocatore
 let endGame = [];
 // Dichiaro il punteggio inizale pari a 0
@@ -83,12 +84,15 @@ function createSquare(number){
 // funzione per colorare i grid item al click e stabilire la vittoria o la perdita
 // gridItem ---> item del DOM a cui applicare l'evento click
 function clickSquare(gridItem, maxCellsScore){
-    gridItem.addEventListener('click', function(){
+    gridItem.addEventListener('click', function eventRemove(){
+        if (bombExplode.length >= 1){
+            this.gridItem.removeEventListener('click', eventRemove);
         // Se la cella cliccata corrisponde a una di quelle nell'array delle bombe si colora di rosso e dichiara la sconfitta
-        if (gridBombs.includes(parseInt(this.children[0].innerHTML))){
+        }else if (gridBombs.includes(parseInt(this.children[0].innerHTML))){
             this.classList.add('red');
             alert(`Hai perso!!! Il tuo punteggio è ${score}!!`);
-        // Altrimenti si colora di azzuro e aumenta il punteggio di 1 e dichiara la vittoria al raggiungimento del massimo punteggio ottenibile
+            bombExplode.push(parseInt(this.children[0].innerHTML));
+        // Altrimenti si colora di azzuro , aumenta il punteggio di 1 e dichiara la vittoria al raggiungimento del massimo punteggio ottenibile
         }else if(!endGame.includes(parseInt(this.children[0].innerHTML)) && (endGame.length >= (maxCellsScore - 17))){
             this.classList.add('azure');
             score++;
