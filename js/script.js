@@ -35,13 +35,14 @@ let gridBombs = [];
 let endGame = [];
 // Dichiaro il punteggio inizale pari a 0
 let score = 0;
+// Dichiaro la variabile che andrà a gestire la difficoltà quando verrà valorizzata nella funzione di click
+let difficultyChoice;
 // - Genero l'elemento del dom al cui click si crea la tabella di gioco
 let play = document.querySelector('#play');
 // - Creo l'evento click che fa apparire la tabella
     // - Attivo e disattivo la tabella al click
     let active = false;
-    // - Dichiaro la difficoltà in base al select input
-    let difficoltà;
+    
     // - Genero la tabella numerata proggressivamente in base alla difficoltà
     let userGrid = document.querySelector('#grid');
     playGrid();
@@ -51,6 +52,7 @@ let play = document.querySelector('#play');
 
 // funzione che legge il valore di difficoltà selezionato dal giocatore e assegna un valore alla variabile difficoltà
 function difficulty(){
+    let difficoltà;
     let gameDifficulty = document.querySelector('#difficulty-choice').value;
         if (gameDifficulty === 'easy'){
             difficoltà = 100;
@@ -59,6 +61,7 @@ function difficulty(){
         }else if (gameDifficulty === 'hard'){
             difficoltà = 49;
         }
+    return difficoltà;
 }
 
 // funzione per creare gli item della tabella in base alla difficoltà
@@ -66,14 +69,13 @@ function difficulty(){
 // return ----> l'item che deve andare a popolare la grid
 function createSquare(number){
     let square = document.createElement('div');
-    if (difficoltà === 100){
+    if (number === 100){
         square.classList.add('square');
-    }else if (difficoltà === 81){
+    }else if (number === 81){
         square.classList.add('square-normal');
-    }else if (difficoltà === 49){
+    }else if (number === 49){
         square.classList.add('square-hard');
     }
-    square.innerHTML = `<span>${number}</span>`;
     return square;
 }
 
@@ -105,8 +107,6 @@ function clickSquare(gridItem){
 // funzione per attivare o disattivare la griglia di gioco al click del bottone play
 function playGrid(){
     play.addEventListener('click', function(){
-        // - Imposto il livello di difficoltà in base alla scelta del giocatore
-        difficulty();
         // - Attivo o nascondo la griglia in base al suo stato attuale
         if(active === true){
             // Svuoto l'array precedentemente creato
@@ -119,9 +119,12 @@ function playGrid(){
         }else if(active === false){
             // Popolo l'array con i 16 numeri random che coincidono con le caselle delle bombe
             gridBombsRandom();
+            // - Imposto il livello di difficoltà in base alla scelta del giocatore
+            difficultyChoice = difficulty();
             // - Genero una griglia in base alla difficoltà impostata
-            for (let i = 0; i < difficoltà; i++) {
-                let gridSquare = createSquare(i + 1);
+            for (let i = 0; i < difficultyChoice; i++) {
+                let gridSquare = createSquare(difficultyChoice);
+                gridSquare.innerHTML = `<span>${i + 1}</span>`;
                 // - Modifico il colore di background della cella al click
                 // - al secondo click il colore di background ritorna quello base
                 clickSquare(gridSquare);
