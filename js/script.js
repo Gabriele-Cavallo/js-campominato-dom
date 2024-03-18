@@ -89,12 +89,13 @@ function createSquare(number){
 function clickSquare(gridItem, maxCellsScore){
     gridItem.addEventListener('click', function eventRemove(){
         if (bombExplode.length >= 1){
-            this.gridItem.removeEventListener('click', eventRemove);
+            this.removeEventListener('click', eventRemove);
         // Se la cella cliccata corrisponde a una di quelle nell'array delle bombe si colora di rosso e dichiara la sconfitta
         }else if (gridBombs.includes(parseInt(this.children[0].innerHTML))){
             this.classList.add('red');
             alert(`Hai perso!!! Il tuo punteggio è ${score}!!`);
             bombExplode.push(parseInt(this.children[0].innerHTML));
+            this.innerHTML = `<span><i class="fa-solid fa-bomb"></i></span>`;
         // Altrimenti si colora di azzuro , aumenta il punteggio di 1 e dichiara la vittoria al raggiungimento del massimo punteggio ottenibile
         }else if(!endGame.includes(parseInt(this.children[0].innerHTML)) && (endGame.length >= (maxCellsScore - 17))){
             this.classList.add('azure');
@@ -114,7 +115,6 @@ function clickSquare(gridItem, maxCellsScore){
             // Pusho il numero selezionato in un array per stabilire la vittoria
             endGame.push(parseInt(this.children[0].innerHTML));
         }
-        console.log('this-square' , this.children[0].innerHTML);
     });
 }
 
@@ -145,7 +145,6 @@ function playGrid(){
                 clickSquare(gridSquare, difficultyChoice);
                 // - Popolo la griglia di gioco
                 userGrid.append(gridSquare);
-                console.log('difficulty-choice' , difficultyChoice);
             }
             userGrid.classList.remove('hide');
             userGrid.classList.add('active');  
