@@ -50,7 +50,8 @@ let play = document.querySelector('#play');
 
 // FUNCTIONS
 
-// funzione che legge il valore di difficoltà selezionato dal giocatore e assegna un valore alla variabile difficoltà
+// funzione che legge il valore di difficoltà selezionato dal giocatore 
+// return ---> assegna il valore alla variabile difficultyChoice
 function difficulty(){
     let difficoltà;
     let gameDifficulty = document.querySelector('#difficulty-choice').value;
@@ -81,14 +82,14 @@ function createSquare(number){
 
 // funzione per colorare i grid item al click e stabilire la vittoria o la perdita
 // gridItem ---> item del DOM a cui applicare l'evento click
-function clickSquare(gridItem){
+function clickSquare(gridItem, maxCellsScore){
     gridItem.addEventListener('click', function(){
         // Se la cella cliccata corrisponde a una di quelle nell'array delle bombe si colora di rosso e dichiara la sconfitta
         if (gridBombs.includes(parseInt(this.children[0].innerHTML))){
             this.classList.add('red');
             alert(`Hai perso!!! Il tuo punteggio è ${score}!!`);
         // Altrimenti si colora di azzuro e aumenta il punteggio di 1 e dichiara la vittoria al raggiungimento del massimo punteggio ottenibile
-        }else if(!endGame.includes(parseInt(this.children[0].innerHTML)) && (endGame.length >= 83)){
+        }else if(!endGame.includes(parseInt(this.children[0].innerHTML)) && (endGame.length >= (maxCellsScore - 17))){
             this.classList.add('azure');
             score++;
             // Pusho il numero selezionato in un array per stabilire la vittoria
@@ -100,7 +101,7 @@ function clickSquare(gridItem){
             // Pusho il numero selezionato in un array per stabilire la vittoria
             endGame.push(parseInt(this.children[0].innerHTML));
         }
-        // console.log('this-square' , this.children[0].innerHTML);
+        console.log('this-square' , this.children[0].innerHTML);
     });
 }
 
@@ -127,9 +128,10 @@ function playGrid(){
                 gridSquare.innerHTML = `<span>${i + 1}</span>`;
                 // - Modifico il colore di background della cella al click
                 // - al secondo click il colore di background ritorna quello base
-                clickSquare(gridSquare);
+                clickSquare(gridSquare, difficultyChoice);
                 // - Popolo la griglia di gioco
                 userGrid.append(gridSquare);
+                console.log('difficulty-choice' , difficultyChoice);
             }
             userGrid.classList.remove('hide');
             userGrid.classList.add('active');  
@@ -143,7 +145,7 @@ function playGrid(){
 // funzione che genera 16 numeri random per indicare quali celle sono le bombe e le pusha nell'array
 function gridBombsRandom(){
     while (gridBombs.length < 16) {
-        let bombs = Math.floor((Math.random() * 100) + 1);
+        let bombs = Math.floor((Math.random() * difficulty()) + 1);
         if (!gridBombs.includes(bombs)){
             gridBombs.push(bombs);
         }
