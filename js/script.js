@@ -40,6 +40,9 @@ let score = 0;
 let difficultyChoice;
 // - Genero l'elemento del dom al cui click si crea la tabella di gioco
 let play = document.querySelector('#play');
+// - Genero l'elemento del dom che conta il punteggio del giocatore e lo imposto a 0 di partenza
+let scoreCounter = document.querySelector('.counter-score');
+scoreCounter.innerHTML = 0;
 // - Creo l'evento click che fa apparire la tabella
     // - Attivo e disattivo la tabella al click
     let active = false;
@@ -95,13 +98,19 @@ function clickSquare(gridItem, maxCellsScore){
         // Altrimenti si colora di azzuro , aumenta il punteggio di 1 e dichiara la vittoria al raggiungimento del massimo punteggio ottenibile
         }else if(!endGame.includes(parseInt(this.children[0].innerHTML)) && (endGame.length >= (maxCellsScore - 17))){
             this.classList.add('azure');
+            // incremento il punteggio di 1
             score++;
+            // aggiungo 1 punto all'elemento che conta i punti
+            scoreCounter.innerHTML = score;
             // Pusho il numero selezionato in un array per stabilire la vittoria
             endGame.push(parseInt(this.children[0].innerHTML));
             alert(`Congratulazioni, hai vinto!!!! Il tuo punteggio è ${score}!!`);
         }else if(!endGame.includes(parseInt(this.children[0].innerHTML))){
             this.classList.add('azure');
+            // incremento il punteggio di 1
             score++;
+            // aggiungo 1 punto all'elemento che conta i punti
+            scoreCounter.innerHTML = score;
             // Pusho il numero selezionato in un array per stabilire la vittoria
             endGame.push(parseInt(this.children[0].innerHTML));
         }
