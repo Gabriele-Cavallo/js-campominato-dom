@@ -31,6 +31,7 @@
 
 // Dichiaro l'array che andrà a conteneri i numeri corrispondenti alle celle delle bombe
 let gridBombs = [];
+// Dichiaro l'array che se popolato attiva la condizione di fine partita
 let bombExplode = [];
 // Dichiaro l'array per stabilire la vittoria del giocatore
 let endGame = [];
@@ -133,7 +134,7 @@ function playGrid(){
             location.reload();
         }else if(active === false){
             // Popolo l'array con i 16 numeri random che coincidono con le caselle delle bombe
-            gridBombsRandom();
+            gridBombsRandom(gridBombs);
             // - Imposto il livello di difficoltà in base alla scelta del giocatore
             difficultyChoice = difficulty();
             // - Genero una griglia in base alla difficoltà impostata
@@ -156,11 +157,14 @@ function playGrid(){
 }
 
 // funzione che genera 16 numeri random per indicare quali celle sono le bombe e le pusha nell'array
-function gridBombsRandom(){
-    while (gridBombs.length < 16) {
+// arrayBombs ---> l'array da popolare con il numero delle celle con la bomba
+// difficulty() ---> funzione che si valorizza alla scelta della difficoltà e mi da il valore massimo del numero da generare in base alla griglia creata
+// return ---> creazione dell'array delle bombe presenti in griglia
+function gridBombsRandom(arrayBombs){
+    while (arrayBombs.length < 16) {
         let bombs = Math.floor((Math.random() * difficulty()) + 1);
-        if (!gridBombs.includes(bombs)){
-            gridBombs.push(bombs);
+        if (!arrayBombs.includes(bombs)){
+            arrayBombs.push(bombs);
         }
     }
 }
