@@ -129,7 +129,6 @@ function playGrid(){
             userGrid.classList.remove('active');
             userGrid.classList.add('hide');  
             userGrid.innerHTML = '';
-            play.innerHTML = 'Open';
             active = false; 
             location.reload();
         }else if(active === false){

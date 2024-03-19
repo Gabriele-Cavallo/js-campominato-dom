@@ -55,6 +55,7 @@ main{
 #play{
     padding: 0 40px;
     cursor: pointer;
+    width: 108px;
 }
 .square{
     height: 10%;
